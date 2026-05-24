@@ -161,6 +161,15 @@ class CartItems extends HTMLElement {
       })
       .then((state) => {
         const parsedState = JSON.parse(state);
+        const cartDrawerWrapper = document.querySelector('cart-drawer');
+
+        // When operating inside the cart drawer, prefer Dawn's cart-drawer renderer.
+        // This avoids fragile selector assumptions when the drawer markup is customized.
+        if (this.tagName === 'CART-DRAWER-ITEMS' && cartDrawerWrapper?.renderContents) {
+          cartDrawerWrapper.renderContents(parsedState);
+          publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: parsedState, variantId: variantId });
+          return;
+        }
 
         CartPerformance.measure(`${eventTarget}:paint-updated-sections"`, () => {
           const quantityElement =
@@ -174,7 +183,6 @@ class CartItems extends HTMLElement {
           }
 
           this.classList.toggle('is-empty', parsedState.item_count === 0);
-          const cartDrawerWrapper = document.querySelector('cart-drawer');
           const cartFooter = document.getElementById('main-cart-footer');
 
           if (cartFooter) cartFooter.classList.toggle('is-empty', parsedState.item_count === 0);
