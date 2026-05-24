@@ -34,18 +34,11 @@
     endif
   -%}
 
-  {%- capture input_id -%}
-    {{ section.id }}-{{ option.position }}-{{ forloop.index0 }}
-  {%- endcapture -%}
+  {%- capture input_id -%}{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}{%- endcapture -%}
 
-  {%- capture input_name -%}
-    {{ option.name }}-{{ section.id }}
-  {%- endcapture -%}
+  {%- capture input_name -%}{{ option.name }}-{{ section.id }}{%- endcapture -%}
 
-  {%- capture input_dataset -%}
-    data-product-url="{{ value.product_url }}"
-    data-option-value-id="{{ value.id }}"
-  {%- endcapture -%}
+  {%- capture input_dataset -%}data-product-url="{{ value.product_url }}" data-option-value-id="{{ value.id }}"{%- endcapture -%}
 
   {%- capture label_unavailable -%}
     <span class="visually-hidden label-unavailable">
@@ -80,8 +73,8 @@
 
       <input
         type="radio"
-        id="{{ input_id }}"
-        name="{{ input_name }}"
+        id="{{ input_id | strip }}"
+        name="{{ input_name | strip }}"
         value="{{ value | escape }}"
         form="{{ product_form_id }}"
         class="variant-pill-input visually-hidden"
@@ -97,7 +90,7 @@
       >
 
       <label
-        for="{{ input_id }}"
+        for="{{ input_id | strip }}"
         class="variant-pill-label{% if value.selected %} is-selected{% endif %}{% if option_disabled %} is-disabled{% endif %}"
       >
         {{ value }}

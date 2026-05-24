@@ -398,10 +398,6 @@ jQuery(document).ready(function() {
 
 // Metal Type Text Change
 $(document).ready(function () {
-    // Enable HTML5 validation
-    const form = $("form[novalidate]");
-    if (form.length) form.removeAttr("novalidate");
-
     const output = $("#variant-selected-text");
 
     function updateSelectedText() {
@@ -426,7 +422,9 @@ $(document).ready(function () {
     updateIsSelectedClasses("properties[Type]");
     updateIsSelectedClasses("properties[Color]");
 
-    $('.variant-pill-input').on('change', function () {
+    // Only handle custom line-item property pills here (e.g. properties[Type], properties[Color]).
+    // Product variant option pills are handled by Dawn's built-in VariantSelects logic.
+    $('.variant-pill-input[name^="properties["]').on('change', function () {
         updateSelectedText();
         updateIsSelectedClasses($(this).attr('name'));
     });
@@ -613,4 +611,3 @@ $(document).ready(function () {
 //     dropdown.style.display = 'block';
 //   }
 // });
-

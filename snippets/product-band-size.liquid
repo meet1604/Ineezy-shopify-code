@@ -53,5 +53,6 @@
     {%- endif -%}
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", () => { document.querySelector("form[novalidate]").removeAttribute("novalidate") })
+    // Keep Dawn's `novalidate` on the product form so add-to-cart isn't blocked by browser validation.
+    // Required property inputs can be validated/shown via theme JS instead.
 </script>
