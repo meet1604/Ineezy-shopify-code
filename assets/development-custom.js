@@ -728,46 +728,49 @@ $(document).on('click', '.delete-address-button', function (e) {
 
 
 
-  function addToCartWithDawn(variantId) {
-    fetch('/cart/add.js', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        id: variantId,
-        quantity: 1
+  function addToCartWithDawn(variantId, quantity = 1) {
+    const cart = document.querySelector('cart-notification') || document.querySelector('cart-drawer');
+
+    // Match Dawn's add-to-cart behavior by requesting updated sections and letting
+    // `cart-drawer` / `cart-notification` render them via `renderContents`.
+    const config = typeof fetchConfig === 'function' ? fetchConfig('javascript') : { method: 'POST', headers: {} };
+    config.headers = config.headers || {};
+    config.headers['X-Requested-With'] = 'XMLHttpRequest';
+    delete config.headers['Content-Type'];
+
+    const formData = new FormData();
+    formData.append('id', variantId);
+    formData.append('quantity', quantity);
+
+    if (cart?.getSectionsToRender) {
+      formData.append(
+        'sections',
+        cart.getSectionsToRender().map((section) => section.id)
+      );
+      formData.append('sections_url', window.location.pathname);
+      cart.setActiveElement?.(document.activeElement);
+    }
+
+    config.body = formData;
+
+    return fetch(`${routes?.cart_add_url || '/cart/add.js'}`, config)
+      .then((res) => res.json())
+      .then((response) => {
+        if (response?.status) {
+          console.error('Add to cart error:', response);
+          return;
+        }
+
+        if (!cart) {
+          window.location = window.routes?.cart_url || '/cart';
+          return;
+        }
+
+        cart.renderContents?.(response);
       })
-    })
-    .then(res => {
-      if (!res.ok) throw new Error('Add to cart failed');
-      return res.json();
-    })
-    .then(() => {
-      const oldDrawer = document.querySelector('cart-drawer');
-
-      if (oldDrawer) {
-        fetch('/?section_id=cart-drawer')
-          .then(res => res.text())
-          .then(html => {
-            const htmlDoc = new DOMParser().parseFromString(html, 'text/html');
-            const newDrawer = htmlDoc.querySelector('cart-drawer');
-
-            if (newDrawer) {
-              oldDrawer.replaceWith(newDrawer);
-              newDrawer.classList.add('active');
-              document.body.classList.add('overflow-hidden');
-
-              // Rebind close events after replacement
-              bindCartDrawerCloseListeners();
-            }
-          });
-      }
-    })
-    .catch(err => {
-      console.error('Add to cart error:', err);
-    });
+      .catch((err) => {
+        console.error('Add to cart error:', err);
+      });
   }
 
   function bindCartDrawerCloseListeners() {
@@ -796,4 +799,4 @@ $(document).on('click', '.delete-address-button', function (e) {
   }
 
   // ✅ Initial bind
-  document.addEventListener('DOMContentLoaded', bindCartDrawerCloseListeners);
+  // Dawn already handles cart drawer open/close in `assets/cart-drawer.js`.
