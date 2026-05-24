@@ -332,7 +332,7 @@
   <a
     href="/collections/all?view=all"
     class="mobile-toolbar-item header__icon header__icon--cart link focus-inset"
-    id="cart-icon-bubble"
+    id="mobile-shop-link"
   >
     <span class="svg-wrapper">{{ 'new-icon-wishlight.svg' | inline_asset_content }}</span>
     <span class="">Shop</span>
@@ -340,17 +340,17 @@
 
   <!-- Wishlist icon -->
 
-  <a href="" class="mobile-toolbar-item header__icon header__icon--cart link focus-inset active" id="cart-icon-bubble">
+  <a href="" class="mobile-toolbar-item header__icon header__icon--cart link focus-inset active" id="mobile-wishlist-link">
     <span class="svg-wrapper">{{ 'new-icon-wishlight.svg' | inline_asset_content }}</span>
     <span class="">Whishlist</span>
   </a>
 
   <!-- cart icon -->
-
+ 
   <a
     href="{{ routes.cart_url }}"
     class="mobile-toolbar-item header__icon header__icon--cart link focus-inset "
-    id="cart-icon-bubble"
+    id="cart-icon-bubble-mobile"
   >
     {% if cart == empty %}
       <span class="svg-wrapper">{{ 'new-icon-cart.svg' | inline_asset_content }}</span>

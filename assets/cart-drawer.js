@@ -8,20 +8,22 @@ class CartDrawer extends HTMLElement {
   }
 
   setHeaderCartIconAccessibility() {
-    const cartLink = document.querySelector('#cart-icon-bubble');
-    if (!cartLink) return;
+    const cartLinks = document.querySelectorAll('#cart-icon-bubble, #cart-icon-bubble-mobile');
+    if (!cartLinks.length) return;
 
-    cartLink.setAttribute('role', 'button');
-    cartLink.setAttribute('aria-haspopup', 'dialog');
-    cartLink.addEventListener('click', (event) => {
-      event.preventDefault();
-      this.open(cartLink);
-    });
-    cartLink.addEventListener('keydown', (event) => {
-      if (event.code.toUpperCase() === 'SPACE') {
+    cartLinks.forEach((cartLink) => {
+      cartLink.setAttribute('role', 'button');
+      cartLink.setAttribute('aria-haspopup', 'dialog');
+      cartLink.addEventListener('click', (event) => {
         event.preventDefault();
         this.open(cartLink);
-      }
+      });
+      cartLink.addEventListener('keydown', (event) => {
+        if (event.code.toUpperCase() === 'SPACE') {
+          event.preventDefault();
+          this.open(cartLink);
+        }
+      });
     });
   }
 
