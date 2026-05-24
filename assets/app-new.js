@@ -10,6 +10,32 @@ $(document).ready(function () {
 
 });
 
+// Ensure variant pill UI stays in sync (selected value text + active styles).
+// This is a safety net on top of Dawn's VariantSelects behavior.
+document.addEventListener('change', function (event) {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) return;
+    if (target.type !== 'radio') return;
+    if (!target.closest('variant-radios')) return;
+
+    const fieldset = target.closest('.product-form__input');
+    if (!fieldset) return;
+
+    const selectedValue = fieldset.querySelector('[data-selected-value]');
+    if (selectedValue) selectedValue.textContent = target.value;
+
+    fieldset.querySelectorAll('.variant-pill-label.is-selected').forEach((label) => {
+        label.classList.remove('is-selected');
+    });
+
+    const id = target.id;
+    if (!id) return;
+
+    const safeId = window.CSS && typeof window.CSS.escape === 'function' ? window.CSS.escape(id) : id.replace(/\"/g, '\\"');
+    const activeLabel = fieldset.querySelector(`label[for="${safeId}"]`);
+    if (activeLabel) activeLabel.classList.add('is-selected');
+});
+
 
 /* =========================================
    HERO SLIDER

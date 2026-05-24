@@ -520,8 +520,7 @@ position: relative;
 
 
 
-.ineezy-new  .ineezy-color-pill .variant-pill-input:checked + .variant-pill-label,
-.ineezy-new .ineezy-color-pill .variant-pill-label.is-selected {
+.ineezy-new .ineezy-color-pill .variant-pill-input:checked + .variant-pill-label {
   background: var(--neutral-400);
   color:  var(--neutral-black);
   border-color: var(--neutral-black);
