@@ -1,0 +1,106 @@
+{% schema %}
+{
+  "name": "Ineezy Offer Banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desk_banner_image",
+      "label": "Desktop Banner Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mon_banner_image",
+      "label": "Mobile Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "small_title",
+      "label": "Small Title",
+      "default": "FLAT"
+    },
+    {
+      "type": "text",
+      "id": "main_title",
+      "label": "Main Title",
+      "default": "40% OFF"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "N_WEB Ineezy Offer Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<section class="ineezy-offer-banner">
+  <div class="container-fluid p-0">
+
+    <div class="offer-banner-wrapper">
+
+      <!-- IMAGE -->
+      <div class="offer-banner-image">
+
+        {% if section.settings.banner_image != blank %}
+          <img
+            src="{{ section.settings.desk_banner_image | image_url: width: 2200 }}"
+            alt="{{ section.settings.main_title }}"
+            loading="lazy"
+          >
+          <img
+            src="{{ section.settings.mob_banner_image | image_url: width: 2200 }}"
+            alt="{{ section.settings.main_title }}"
+            loading="lazy"
+          >
+        {% endif %}
+
+      </div>
+
+      <!-- CONTENT -->
+      <div class="offer-banner-content">
+
+        <span class="small-title">
+          {{ section.settings.small_title }}
+        </span>
+
+        <h2 class="main-title">
+          {{ section.settings.main_title }}
+        </h2>
+
+        <!-- DIVIDER -->
+        <div class="offer-divider">
+
+          <span class="line"></span>
+          {% comment %} <svg xmlns="http://www.w3.org/2000/svg" width="84" height="20" viewBox="0 0 84 20" fill="none">
+            <path d="M42 10C42 10 39 1 33 1C27 1 24 10 18 10C12 10 9 1 3 1M42 10C42 10 45 19 51 19C57 19 60 10 66 10C72 10 75 19 81 19M42 10H42.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg> {% endcomment %}
+          <img src="{{ "main-title-divider-black.svg" | asset_url }}" alt="">
+
+          <span class="line"></span>
+
+        </div>
+
+        <!-- BUTTON -->
+        {% if section.settings.button_text != blank %}
+          <a href="{{ section.settings.button_link }}" class="btn btn-primary">
+            {{ section.settings.button_text }}
+          </a>
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+</section>

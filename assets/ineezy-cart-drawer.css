@@ -1,0 +1,225 @@
+.ineezy-new .main-drawer {
+    background: var(--white);
+    padding: 0px;
+}
+
+.ineezy-new .drawer__header {
+  padding: 16px;
+  border-bottom: 1px solid var(--neutral-3);
+}
+
+.ineezy-new .ineezy-cart-header-inner {
+  display: flex;
+  align-items: center;  
+  justify-content: space-between;
+    width: 100%;
+}
+
+.ineezy-new .drawer__header .ineezy-cart-header-content{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.ineezy-new .drawer__header .drawer__heading{
+  margin: 0;
+  font-size: 24px;
+  line-height: 140%;
+  font-weight: 500;
+  color: var(--neutral-black);
+}
+
+.ineezy-new .ineezy-cart-count {
+  color: var(--neutral-8);
+  font-size: 20px;
+  line-height: 140%;
+  margin-bottom: 0px;
+}
+
+.ineezy-new .ineezy-cart-close {
+width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 16px;
+    background: transparent;
+    border: 0;
+    position: relative;
+    left: 0;
+    top: 0;
+    min-height: 24px;
+}
+.ineezy-new .ineezy-cart-close span{
+    width: 16px;
+    height: 16px;
+}
+.ineezy-new .drawer__contents {
+  padding: 20px;
+}
+
+.ineezy-new .ineezy-cart-progress {
+  display: flex;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid #E6DED1;
+  border-radius: 24px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.ineezy-new .ineezy-cart-progress__gift {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #F4EEE2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ineezy-new .ineezy-cart-progress__content {
+  flex: 1;
+}
+
+.ineezy-new .ineezy-cart-progress__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.ineezy-new .ineezy-cart-progress__text {
+  font-size: 14px;
+  color: #2B1E18;
+}
+
+.ineezy-new .ineezy-cart-progress__count {
+  font-size: 13px;
+  color: #8F867A;
+}
+
+.ineezy-new .ineezy-cart-progress__bar {
+  height: 8px;
+  background: #EEE7DA;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ineezy-new .ineezy-cart-progress__bar span {
+  display: block;
+  height: 100%;
+  background: #B69238;
+}
+
+.ineezy-new .ineezy-cart-card {
+  display: flex;
+  gap: 0px;
+  background:var(--neutral-2);
+  border: 1px solid var(--neutral-3);
+  border-radius: 8px;
+  padding: 0px;
+  margin-bottom: 16px;
+}
+
+.ineezy-new .ineezy-cart-card__image {
+  width: 100%;
+  max-width: 100px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--neutral-2);
+  flex-shrink: 0;
+}
+
+.ineezy-new .ineezy-cart-card__content {
+  padding: 16px;
+}
+
+.ineezy-new .ineezy-cart-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.ineezy-new .ineezy-cart-card__title {
+  color: #2B1E18;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.ineezy-new .ineezy-cart-card__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.ineezy-new .ineezy-quantity {
+  border: 1px solid #D8D1C5;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.ineezy-new .ineezy-remove-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #F4EEE2;
+  border: 0;
+}
+
+.ineezy-new .ineezy-cart-accordion {
+  margin-top: 24px;
+}
+
+.ineezy-new .ineezy-cart-accordion .accordion-item {
+  border-radius: 24px !important;
+  overflow: hidden;
+  border: 1px solid #E6DED1;
+}
+
+.ineezy-new .ineezy-cart-accordion .accordion-button {
+  background: #fff;
+  box-shadow: none !important;
+  padding: 22px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #2B1E18;
+}
+
+.ineezy-new .ineezy-cart-accordion .accordion-body {
+  padding: 0 24px 24px;
+}
+
+.ineezy-new .ineezy-cart-accordion textarea {
+  width: 100%;
+  min-height: 130px;
+  border-radius: 18px;
+  border: 1px solid #E6DED1;
+  padding: 18px;
+  resize: none;
+}
+
+.ineezy-new .main-drawer-footer {
+  position: sticky;
+  bottom: 0;
+  background: #F7F4EE;
+  padding: 20px;
+  border-top: 1px solid #E6DED1;
+}
+
+.ineezy-new .cart-drawer__footer {
+  background: #F2EEE4;
+  border-radius: 28px;
+  padding: 24px;
+}
+
+.ineezy-new .totals {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ineezy-new .totals__total-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #B69238;
+}

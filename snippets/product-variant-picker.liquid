@@ -1,0 +1,228 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - block: {Object} passing the block information.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+{% endcomment %}
+
+<div class="main-variant-picker custom-variant">
+
+{%- unless product.has_only_default_variant -%}
+
+<variant-radios
+  id="variant-radios-{{ section.id }}"
+  data-section="{{ section.id }}"
+  data-url="{{ product.url }}"
+  {{ block.shopify_attributes }}
+>
+
+  {%- for option in product.options_with_values -%}
+
+    {%- liquid
+      assign swatch_count = option.values | map: 'swatch' | compact | size
+      assign picker_type = block.settings.picker_type
+
+      if swatch_count > 0 and block.settings.swatch_shape != 'none'
+        if block.settings.picker_type == 'dropdown'
+          assign picker_type = 'swatch_dropdown'
+        else
+          assign picker_type = 'swatch'
+        endif
+      endif
+    -%}
+
+    {% if option.name == 'Color' or option.name == 'Colour' %}
+
+      <fieldset class="js product-form__input product-form__input--color">
+
+        <legend class="form__label">
+          {{ option.name }}:
+          <span data-selected-value>
+            {{ option.selected_value }}
+          </span>
+        </legend>
+
+        <div class="ineezy-color-swatches">
+
+          {% for value in option.values %}
+
+            {% liquid
+              assign swatch_image = value.swatch.image
+              assign swatch_color = value.swatch.color
+            %}
+
+            <div class="ineezy-color-swatch-wrapper">
+
+              <input
+                type="radio"
+                id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                name="{{ option.name }}-{{ section.id }}"
+                value="{{ value | escape }}"
+                form="{{ product_form_id }}"
+                data-product-url="{{ value.product_url }}"
+                data-option-value-id="{{ value.id }}"
+                {% if option.selected_value == value %}
+                  checked
+                {% endif %}
+              >
+
+              <label
+                for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+                class="ineezy-color-swatch"
+              >
+
+                {% if swatch_image != blank %}
+
+                  <img
+                    src="{{ swatch_image | image_url: width: 120 }}"
+                    alt="{{ value }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                  >
+
+                {% elsif swatch_color != blank %}
+
+                  <span
+                    class="ineezy-color-swatch__color"
+                    style="background-color: {{ swatch_color }};"
+                  ></span>
+
+                {% else %}
+
+                  <span class="ineezy-color-swatch__fallback">
+                    {{ value }}
+                  </span>
+
+                {% endif %}
+
+              </label>
+
+            </div>
+
+          {% endfor %}
+
+        </div>
+
+      </fieldset>
+
+    {%- elsif picker_type == 'swatch' -%}
+
+      <fieldset class="js product-form__input product-form__input--swatch">
+
+        <legend class="form__label">
+          {{ option.name }}:
+          <span data-selected-value>
+            {{ option.selected_value }}
+          </span>
+        </legend>
+
+        {% render 'product-variant-options',
+          product: product,
+          option: option,
+          block: block,
+          picker_type: picker_type
+        %}
+
+      </fieldset>
+
+    {%- elsif picker_type == 'button' -%}
+
+      {%- if option.name == "Size" -%}
+        <div class="variant-{{ option.name }}">
+      {%- else -%}
+        <div class="variant-{{ option.name }} pills-variant">
+      {%- endif -%}
+
+        <fieldset class="js product-form__input product-form__input--pill">
+
+          <legend class="form__label">
+            {{ option.name }}:
+            <span data-selected-value>
+              {{ option.selected_value }}
+            </span>
+          </legend>
+
+          <div class="ineezy-color-pill">
+
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+
+          </div>
+
+        </fieldset>
+
+      </div>
+
+    {%- else -%}
+
+      <div class="product-form__input product-form__input--dropdown">
+
+        <label
+          class="form__label"
+          for="Option-{{ section.id }}-{{ forloop.index0 }}"
+        >
+          {{ option.name }}
+        </label>
+
+        <div class="select">
+
+          {%- if picker_type == 'swatch_dropdown' -%}
+
+            <span
+              data-selected-value
+              class="dropdown-swatch"
+            >
+
+              {% render 'swatch',
+                swatch: option.selected_value.swatch,
+                shape: block.settings.swatch_shape
+              %}
+
+            </span>
+
+          {%- endif -%}
+
+          <select
+            id="Option-{{ section.id }}-{{ forloop.index0 }}"
+            class="select__select"
+            name="options[{{ option.name | escape }}]"
+            form="{{ product_form_id }}"
+          >
+
+            {% render 'product-variant-options',
+              product: product,
+              option: option,
+              block: block,
+              picker_type: picker_type
+            %}
+
+          </select>
+
+          <span class="svg-wrapper">
+            {{- 'icon-caret.svg' | inline_asset_content -}}
+          </span>
+
+        </div>
+
+      </div>
+
+    {%- endif -%}
+
+  {%- endfor -%}
+
+<script type="application/json" data-selected-variant>
+  {{ product.selected_or_first_available_variant | json }}
+</script>
+
+</variant-radios>
+
+{%- endunless -%}
+
+</div>
